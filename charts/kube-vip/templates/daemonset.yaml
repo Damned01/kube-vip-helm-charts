@@ -13,8 +13,10 @@ spec:
         {{- include "kube-vip.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - args:
-          - manager
+        args:
+          {{  range .Values.arguments }}
+            - {{ . }}
+          {{ end }}
         env:
           {{- if eq .Values.env.cp_enable "true" }}
           - name: vip_address
